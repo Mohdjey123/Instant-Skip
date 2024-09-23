@@ -1,42 +1,56 @@
-let isSkippingEnabled = true; // Initial state
+const defined = (v) => v !== null && v !== undefined;
 
-// Get references to elements
-const toggleButton = document.getElementById('toggleButton');
-const statusDiv = document.getElementById('status');
-const buttonVisibilityDiv = document.getElementById('buttonVisibility');
+const createPointerEvent = (type, element) => {
+  const event = new PointerEvent(type, {
+    bubbles: true,
+    cancelable: true,
+    pointerType: 'mouse',
+  });
+  element.dispatchEvent(event);
+};
 
-// Update the button and status on popup open
-chrome.runtime.getBackgroundPage((background) => {
-    isSkippingEnabled = background.isEnabled; // Access the state from the background
-    updateUI();
-});
+const clickSkipButton = () => {
+  const skipButton = document.querySelector(".ytp-skip-ad-button");
+  const skipButtonModern = document.querySelector(".ytp-ad-skip-button-modern");
 
-// Toggle ad skipping
-toggleButton.addEventListener('click', () => {
-    isSkippingEnabled = !isSkippingEnabled;
-    chrome.runtime.sendMessage({ action: "toggle", enabled: isSkippingEnabled });
-    updateUI();
-});
+  if (defined(skipButton) && skipButton.style.opacity === '1' && skipButton.style.display !== 'none') {
+    createPointerEvent('pointerdown', skipButton);
+    createPointerEvent('pointerup', skipButton);
+    return true;
+  }
 
-// Update the UI based on current state
-function updateUI() {
-    toggleButton.textContent = isSkippingEnabled ? 'Disable Ad Skipping' : 'Enable Ad Skipping';
-    statusDiv.textContent = `Ad Skipping is ${isSkippingEnabled ? 'enabled' : 'disabled'}.`;
-    checkSkipButtonStatus();
-}
+  if (defined(skipButtonModern) && skipButtonModern.style.opacity === '1' && skipButtonModern.style.display !== 'none') {
+    createPointerEvent('pointerdown', skipButtonModern);
+    createPointerEvent('pointerup', skipButtonModern);
+    return true;
+  }
 
-// Check if the skip button is visible
-function checkSkipButtonStatus() {
-    chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
-        chrome.scripting.executeScript({
-            target: { tabId: tabs[0].id },
-            function: () => {
-                const skipButton = document.querySelector('.ytp-skip-ad-button');
-                return skipButton && skipButton.style.display !== 'none';
-            }
-        }, (results) => {
-            const isVisible = results[0]?.result;
-            buttonVisibilityDiv.textContent = `Skip Button Status: ${isVisible ? 'Visible' : 'Not Visible'}`;
-        });
-    });
-}
+  return false;
+};
+
+const clickConfirmDialogButton = () => {
+  const confirmButton = document.querySelector(".style-scope.yt-confirm-dialog-renderer");
+
+  if (defined(confirmButton)) {
+    createPointerEvent('pointerdown', confirmButton);
+    createPointerEvent('pointerup', confirmButton);
+  }
+};
+
+const stopYoutubeAd = () => {
+  const adElement = document.querySelector(".ad-showing.ad-interrupting video");
+
+  if (adElement && adElement.readyState >= 3) {
+    adElement.currentTime = adElement.duration - 1;
+  }
+
+  clickSkipButton();
+
+  const overlayAds = document.querySelectorAll(".ytp-ad-overlay-slot");
+  overlayAds.forEach((overlayAd) => {
+    overlayAd.style.visibility = "hidden";
+  });
+};
+
+// Check for ads every second
+setInterval(stopYoutubeAd, 1000);
