@@ -1,0 +1,40 @@
+body {
+   font-family: Arial, sans-serif;
+   margin: 0;
+   padding: 15px;
+   background-color: #282c34;
+   color: white;
+   width: 200px;
+}
+
+.container {
+   text-align: center;
+}
+
+h2 {
+   font-size: 18px;
+   margin: 0 0 10px;
+}
+
+button {
+   background-color: #61dafb;
+   color: black;
+   border: none;
+   padding: 10px;
+   border-radius: 5px;
+   cursor: pointer;
+   font-weight: bold;
+   transition: background-color 0.3s;
+   width: 100%;
+}
+
+button:hover {
+   background-color: #21a1f1;
+}
+
+#status, #buttonVisibility {
+   margin-top: 10px;
+   font-size: 14px;
+   font-weight: normal;
+   opacity: 0.8;
+}
