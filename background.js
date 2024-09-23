@@ -1,11 +1,13 @@
-let isEnabled = true;
-
-chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
-  if (request.action === "toggle") {
-    isEnabled = request.enabled;
-  }
-});
+let isEnabled = true; // Default state
 
 chrome.runtime.onInstalled.addListener(() => {
-  console.log("Ad Skipper installed.");
+    chrome.storage.local.set({ isEnabled });
+});
+
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+    if (request.action === "toggle") {
+        isEnabled = request.enabled;
+        chrome.storage.local.set({ isEnabled });
+        sendResponse({ success: true });
+    }
 });
