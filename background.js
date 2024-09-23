@@ -1,11 +1,11 @@
-let isEnabled = true; // State to track if ad skipping is enabled
+let isEnabled = true;
 
-// Listen for clicks on the extension icon
-chrome.action.onClicked.addListener((tab) => {
-  isEnabled = !isEnabled; // Toggle the state
-  const status = isEnabled ? "enabled" : "disabled";
-  console.log(`Ad skipping is now ${status}.`);
+chrome.runtime.onMessage.addListener((request, sender, sendResponse) => {
+  if (request.action === "toggle") {
+    isEnabled = request.enabled;
+  }
+});
 
-  // Send a message to the content script to update its state
-  chrome.tabs.sendMessage(tab.id, { action: "toggle", enabled: isEnabled });
+chrome.runtime.onInstalled.addListener(() => {
+  console.log("Ad Skipper installed.");
 });
