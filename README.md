@@ -17,7 +17,6 @@ This project was created for learning purposes to explore Chrome extension devel
 ## Features
 
 - Automatically skips YouTube ads when available.
-- Simple user interface for toggling ad skipping functionality.
 
 ## Getting Started
 
