@@ -22,10 +22,13 @@ This project was created for learning purposes to explore Chrome extension devel
 ## Getting Started
 
 1. Clone this repository to your local machine.
-2. Open Chrome and navigate to `chrome://extensions/`.
-3. Enable Developer mode.
-4. Click on "Load unpacked" and select the directory where you cloned this repository.
-5. Click on the extension icon to open the popup and toggle ad skipping.
+1. Open your Chromium-based browser.
+1. Navigate to the extensions page:
+     - For Chromium/Chrome: `chrome://extensions/`
+     - For Opera: `opera://extensions/`
+1. Enable Developer mode.
+1. Click on "Load unpacked" and select the directory where you cloned this repository.
+1. Click on the extension icon to open the popup and toggle ad skipping.
 
 ## License
 
