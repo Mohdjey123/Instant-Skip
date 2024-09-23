@@ -3,7 +3,7 @@
     "name": "Ad Skipper",
     "version": "1.0",
     "description": "Automatically clicks the Skip Ads button.",
-    "permissions": ["scripting", "activeTab"],
+    "permissions": ["scripting", "storage", "activeTab"],
     "background": {
       "service_worker": "background.js"
     },
@@ -17,4 +17,3 @@
       "default_popup": "popup.html"
     }
   }
-  
