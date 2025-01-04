@@ -15,6 +15,8 @@ This project was created for learning purposes to explore Chrome extension devel
 **This extension is not intended to violate YouTube's guidelines or terms of service.** It is purely a learning project to understand how Chrome extensions can interact with web pages.
 
 **Please Note**: This project is experimental and for educational purposes. It will not receive updates or maintenance if it stops working due to changes in YouTube's ad system or Chrome's extension policies.
+**Current Status**:
+As of now, this extension is no longer functional due to changes in YouTube's ad system or Chrome's extension policies. This project is experimental and for educational purposes only and will not receive updates or maintenance to address these issues.
 
 ## Features
 
